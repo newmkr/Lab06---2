@@ -1,0 +1,20 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.log
+*.bak
+
+# Packages
+packages/
+node_modules/
+
+# ReSharper files
+*.resharper
+
+# Temporary files
+*.tmp
