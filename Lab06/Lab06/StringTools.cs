@@ -9,6 +9,28 @@ namespace Lab06
 
 		private const string _digits = "1234567890";
 
+		private const string _dateseparators = " ./";
+
+		private static bool _IsInKeys(char chr, string keys)
+		{
+			return keys.IndexOf(chr) != -1; ;
+		}
+
+		private static bool _IsALetter(char chr)
+		{
+			return _IsInKeys(chr, _letters);
+		}
+
+		private static bool _IsADigit(char chr)
+		{
+			return _IsInKeys(chr, _digits);
+		}
+
+		private static bool _IsADateSeparator(char chr)
+		{
+			return _IsInKeys(chr, _dateseparators);
+		}
+
 		// Внутренний метод реализации LetterCount и SymbolCount. str - строка, где ищем символы. keys - символы, которые мы ищем. inverted - наоборот, искать символы, НЕ содержащиеся в keys
 		private static int _UniversalCount(string str, string keys, bool inverted = false)
 		{
@@ -27,36 +49,6 @@ namespace Lab06
 				}
 			}
 			return result;
-		}
-
-		private static bool _IsInKeys(char chr, string keys)
-		{
-			return keys.IndexOf(chr) != -1; ;
-		}
-
-		private static bool _IsALetter(char chr)
-		{
-			return _IsInKeys(chr, _letters);
-		}
-
-		private static bool _IsADigit(char chr)
-		{
-			return _IsInKeys(chr, _digits);
-		}
-
-		public static int LetterCount(string str)
-		{
-			return _UniversalCount(str, _letters);
-		}
-
-		public static int NonLetterCount(string str)
-		{
-			return _UniversalCount(str, _letters, true);
-		}
-
-		public static int SymbolCount(string str)
-		{
-			return str.Length;
 		}
 
 		private static List<int> _GetWordsData(string str, string keys = _letters) // Понятие "слова" может быть заменено, если в keys передать другой набор символов, например цифр
@@ -95,6 +87,21 @@ namespace Lab06
 				result[index / 2] = (str.Substring(wordsData[index], wordsData[index + 1]));
 			}
 			return result;
+		}
+
+		public static int LetterCount(string str)
+		{
+			return _UniversalCount(str, _letters);
+		}
+
+		public static int NonLetterCount(string str)
+		{
+			return _UniversalCount(str, _letters, true);
+		}
+
+		public static int SymbolCount(string str)
+		{
+			return str.Length;
 		}
 
 		public static double AverageWordLength(string str)
@@ -142,8 +149,9 @@ namespace Lab06
 			return count;
 		}
 
-		public static bool IsAPalindrome(string str)
+		public static bool IsAPalindrome(string inputString)
 		{
+			string str = inputString.ToLower();
 			// Проверку на то, является ли строка словом ИЗ букв, не делаем. Число тоже может быть палиндромом (20.11.02 , 22:22 итд)
 			for (int index = 0; index < str.Length / 2; index++) // Проверяем до середины слова (или не включая до символа, находящегося по середине)
 			{
@@ -154,12 +162,13 @@ namespace Lab06
 
 		public static bool IsAValidDate(string str)
 		{
-			if (_IsADigit(str[0])
+			if (str.Length > 7 // Если не делать сразу эту проверку то будет исключение при адресации символа
+			&&_IsADigit(str[0])
 			&& _IsADigit(str[1])
-			&& (str[2] == '.')
+			&& _IsADateSeparator(str[2])
 			&& _IsADigit(str[3])
 			&& _IsADigit(str[4])
-			&& (str[5] == '.')
+			&& _IsADateSeparator(str[5])
 			&& _IsADigit(str[6])
 			&& _IsADigit(str[7])
 			&& (str.Length == 8 || str.Length == 10 && _IsADigit(str[8]) && _IsADigit(str[9]))
