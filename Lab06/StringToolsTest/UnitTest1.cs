@@ -7,9 +7,9 @@ namespace StringToolsTest;
 public class UnitTest1
 {
     [Theory]
-    [InlineData("qweewq", true)]
-    [InlineData("Capitalatipac", true)]
-    [InlineData("dogeeseseegod", true)]
+    [InlineData("qweewq", true)] // 6 букв
+    [InlineData("Capitalatipac", true)] // Игнорировать регистр
+    [InlineData("dogeeseseegod", true)] // 13 букв
     [InlineData("22:22", true)]
     [InlineData("20.11.02", true)]
     [InlineData("not a palindrome", false)]

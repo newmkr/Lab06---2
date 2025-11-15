@@ -56,7 +56,7 @@
 
 		static int GetOption(int lowerBound, int upperBound)
 		{
-			int option = 0;
+			int option = 0; // Задаём дефолт значение чтобы компилятор не ругался
 			bool success = false;
 			do
 			{

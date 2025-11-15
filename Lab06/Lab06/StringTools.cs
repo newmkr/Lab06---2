@@ -1,4 +1,4 @@
-using System.Text;
+using System.Text; // Для класса StringBuilder
 
 namespace Lab06
 {
@@ -9,7 +9,7 @@ namespace Lab06
 
 		private const string _digits = "1234567890";
 
-		private const string _dateseparators = " ./";
+		private const string _dateseparators = @" ./\-";
 
 		private static bool _IsInKeys(char chr, string keys)
 		{
@@ -32,7 +32,7 @@ namespace Lab06
 		}
 
 		// Внутренний метод реализации LetterCount и SymbolCount. str - строка, где ищем символы. keys - символы, которые мы ищем. inverted - наоборот, искать символы, НЕ содержащиеся в keys
-		private static int _UniversalCount(string str, string keys, bool inverted = false)
+		private static int _CountOverlapsWithKeys(string str, string keys, bool inverted = false)
 		{
 			int result = 0;
 			for (int index = 0; index < str.Length; index++)
@@ -91,12 +91,12 @@ namespace Lab06
 
 		public static int LetterCount(string str)
 		{
-			return _UniversalCount(str, _letters);
+			return _CountOverlapsWithKeys(str, _letters);
 		}
 
 		public static int NonLetterCount(string str)
 		{
-			return _UniversalCount(str, _letters, true);
+			return _CountOverlapsWithKeys(str, _letters, true);
 		}
 
 		public static int SymbolCount(string str)
@@ -162,6 +162,7 @@ namespace Lab06
 
 		public static bool IsAValidDate(string str)
 		{
+			// Если это ужасное решение - не вариант, можно ли использовать регулярные выражения для этой задачи?
 			if (str.Length > 7 // Если не делать сразу эту проверку то будет исключение при адресации символа
 			&&_IsADigit(str[0])
 			&& _IsADigit(str[1])
