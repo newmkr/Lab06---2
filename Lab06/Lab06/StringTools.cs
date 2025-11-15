@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 
 namespace Lab06
@@ -7,7 +8,7 @@ namespace Lab06
 		// Содержит большие и маленькие буквы латиницы и кириллицы
 		private const string _letters = "йцукенгшщзхъфывапролджэячсмитьбюёЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁqwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
 
-		private const string _numbers = "1234567890";
+		private const string _digits = "1234567890";
 
 		// Внутренний метод реализации LetterCount и SymbolCount. str - строка, где ищем символы. keys - символы, которые мы ищем. inverted - наоборот, искать символы, НЕ содержащиеся в keys
 		private static int _UniversalCount(string str, string keys, bool inverted = false)
@@ -37,6 +38,11 @@ namespace Lab06
 		private static bool _IsALetter(char chr)
 		{
 			return _IsInKeys(chr, _letters);
+		}
+
+		private static bool _IsADigit(char chr)
+		{
+			return _IsInKeys(chr, _digits);
 		}
 
 		public static int LetterCount(string str)
@@ -149,8 +155,27 @@ namespace Lab06
 
 		public static bool IsAValidDate(string str)
 		{
-			/* Получаем данные о нахождении "слов", при этом под "словом" будем считать
-			число, то есть подстроку состоящую из цифр */
+			if (_IsADigit(str[0])
+			&& _IsADigit(str[1])
+			&& (str[2] == '.')
+			&& _IsADigit(str[3])
+			&& _IsADigit(str[4])
+			&& (str[5] == '.')
+			&& _IsADigit(str[6])
+			&& _IsADigit(str[7])
+			&& (str.Length == 8 || str.Length == 10 && _IsADigit(str[8]) && _IsADigit(str[9]))
+			)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+			// Альренативная имплементация:
+			/* /* Получаем данные о нахождении "слов", при этом под "словом" будем считать
+			число, то есть подстроку состоящую из цифр * /
 			List<int> wordsData = _GetWordsData(str, _numbers);
 			// XX.XX.XX    XX.XX.XXXX
 			// 01234567    0123456789
@@ -160,7 +185,7 @@ namespace Lab06
 			Если число является датой, то информация о словах ВСЕГДА будет
 			соответствовать формату 1 (если в доте неполный год)
 			или формату 2 (полный год)
-			*/
+			* /
 			if (wordsData == dateFormat1 || wordsData == dateFormat2)
 			{
 				// Формат соответствует. Теперь нужно проверить, правильные ли числа и месяцы
@@ -182,7 +207,7 @@ namespace Lab06
 			else
 			{
 				return false;
-			}
+			} */
 		}
 	}
 }
